@@ -18,7 +18,6 @@ public:
 
   
   int search(int value);
-  int rsearch(int value);//Recursive Search
   void insert(int value);
 
   int treesum();
@@ -27,7 +26,9 @@ public:
   int countodds(Node *n);
   int oddsum();
   int oddsum(Node *n);
-  // int searchr(int value);
-  // int searchr(int value, Node *n);
+  int searchr(int value);
+  int searchr(int value, Node *n);
+  bool deleteChild(int value);
+  //void insertr(int n);
   
 };

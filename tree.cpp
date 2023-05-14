@@ -208,26 +208,125 @@ void BSTree::setup(){
 //Start Assignment here
 
 //Recursive Search
-int BSTree::rsearch(int value){
+int BSTree::searchr(int value){
+  Node *current = root;
+  int node_val = current -> getData();
+  if(node_val == value){
+    return node_val; //Found Value
+  }
 
+  //Recurse if value is not found
+  else if(value < node_val){
+    if(current -> getLeft() != nullptr){
+      searchr(value, current -> getLeft());
+    }else{
+      return -1; //If it's null we reached end of node and we couldn't find it.
+    }
+  }else{
+    if(current -> getRight() != nullptr){
+      searchr(value, current -> getRight());
+    }else{
+      return -1; //If it's null we reached end of node and we couldn't find it.
+    }
+  }
+  return -1;
 }
 
-/*
-Normal search routine
-int BSTree::search(int n){
-  Node *current = root;
+//Helper function for keeping track of node
+int BSTree::searchr(int value, Node *n){
+  Node *current = n;
+  int node_val = current -> getData();
+  if(node_val == value){
+    return node_val; //Found Value
+  }
 
-  
+  //Recurse if value is not found
+  else if(value < node_val){
+    if(current -> getLeft() != nullptr){
+      searchr(value, current -> getLeft());
+    }
+  }else{
+    if(current -> getRight() != nullptr){
+      searchr(value, current -> getRight());
+    }
+  }
+  return -1;
+}
+
+//Recursive Insert (Need to try later not high priority)
+// void BSTree::insertr(int n){
+//   Node *new_node = new Node(n);
+//   //Special Case
+//   if(root == nullptr){//Tree is empty
+//     root = new_node;
+//     return;
+//   }
+
+
+// }
+
+
+/*
+Normal Insert
+void BSTree::insert(int n){
+  Node *new_node = new Node(n);
+
+  // special case if the tree is empty
+  if (root == nullptr){
+    root = new_node;
+    return;
+  }
+
+  // search for the insertion point
+  Node *current = root;
+  Node *trailer = nullptr;
   while (current != nullptr){
-    int node_val = current->getData();
-    if (n == node_val){
-      return node_val;
-    } else if (n < node_val){
+    trailer = current; // catch the trailer up
+    int val = current->getData();
+    if (n == val){
+      // update the node with the additional stuff
+      return;
+    } else if (n < val){
       current = current->getLeft();
     } else {
       current = current->getRight();
     }
   }
-  throw 1; // returning a not found value would be better
+  // if we get here, trailer points to the
+  // node above the new node's location
+  if (n < trailer->getData()){
+    trailer->setLeft(new_node);
+  } else {
+    trailer->setRight(new_node);
+  }
+     
 }
 */
+
+
+//Delete Routine
+bool BSTree::deleteChild(int value){
+  //Check if Node is found
+  if(searchr(value) == -1){
+    return false;
+  }else{
+    
+  }
+
+  //Node has no children
+  // if(node has no children){
+  //   remove node
+  // }
+
+  //Node has one child
+
+  //Node has two children
+  return false;
+}
+
+
+
+//Tree Height
+
+
+//Are they cousins (On the layer on the tree)

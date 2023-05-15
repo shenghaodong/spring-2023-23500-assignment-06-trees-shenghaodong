@@ -31,6 +31,7 @@ public:
   bool deleteNode(int value);
   int treeHeight();
   int treeHeight(Node *getHeight);
+  bool isCousin(int a, int b);
   //std::string checkChild(int n);
   //void insertr(int n);
   

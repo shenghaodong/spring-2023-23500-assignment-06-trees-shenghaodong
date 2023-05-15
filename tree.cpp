@@ -384,9 +384,35 @@ int BSTree::treeHeight(Node *getHeight){
 
 
 //Are they cousins (On the layer on the tree)
-bool isCousin(int a, int b){
+bool BSTree::isCousin(int a, int b){
+  Node *walkerA = root;
+  Node *walkerB = root;
+  if(searchr(a) == -1 ||searchr(b) == -1){
+    return false;
+  }
   //Find Node A
+  while(walkerA -> getData() != a){
+    if(walkerA -> getData() < a){
+      walkerA = walkerA -> getRight();
+    }else{
+      walkerA = walkerA -> getLeft();
+    }
+  }
+  
 
   //Find Node B
+  while(walkerB -> getData() != b){
+    if(walkerB -> getData() < b){
+      walkerB = walkerB -> getRight();
+    }else{
+      walkerB = walkerB -> getLeft();
+    }
+  }
 
+  int heightA = treeHeight(walkerA);
+  int heightB = treeHeight(walkerB);
+  if(heightA == heightB){
+    return true;
+  }
+  return false;
 }

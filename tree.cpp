@@ -218,15 +218,11 @@ int BSTree::searchr(int value){
   //Recurse if value is not found
   else if(value < node_val){
     if(current -> getLeft() != nullptr){
-      searchr(value, current -> getLeft());
-    }else{
-      return -1; //If it's null we reached end of node and we couldn't find it.
+      return searchr(value, current -> getLeft());
     }
   }else{
     if(current -> getRight() != nullptr){
-      searchr(value, current -> getRight());
-    }else{
-      return -1; //If it's null we reached end of node and we couldn't find it.
+      return searchr(value, current -> getRight());
     }
   }
   return -1;
@@ -243,11 +239,11 @@ int BSTree::searchr(int value, Node *n){
   //Recurse if value is not found
   else if(value < node_val){
     if(current -> getLeft() != nullptr){
-      searchr(value, current -> getLeft());
+      return searchr(value, current -> getLeft());
     }
   }else{
     if(current -> getRight() != nullptr){
-      searchr(value, current -> getRight());
+      return searchr(value, current -> getRight());
     }
   }
   return -1;
@@ -303,24 +299,72 @@ void BSTree::insert(int n){
 }
 */
 
+//checkChild helper
+// std::string BSTree::checkChild(int n){
+//   Node *current = root;
+
+//   while (current != nullptr){
+//     int node_val = current->getData();
+//     if (n == node_val){
+//       if(current -> getLeft() != nullptr && current -> getRight() != nullptr){
+//         return "2 children";
+//       }else if(current -> getLeft() != nullptr || current -> getRight() != nullptr){
+//         return "1 child";
+//       }
+//     } else if (n < node_val){
+//       current = current->getLeft();
+//     } else {
+//       current = current->getRight();
+//     }
+//   }
+//   return "not found";
+  
+// }
 
 //Delete Routine
-bool BSTree::deleteChild(int value){
+bool BSTree::deleteNode(int value){
+  Node *walker = root;
+  Node *trailer = nullptr;
   //Check if Node is found
   if(searchr(value) == -1){
     return false;
   }else{
-    
+    //Find the node location
+    while(walker -> getData() != value){
+      std::cout << walker -> getData() << std::endl;
+      if(walker -> getData() < value){
+        trailer = walker;
+        walker = walker -> getRight();
+      }else{
+        trailer = walker;
+        walker = walker -> getLeft();
+      }
+    }
   }
 
   //Node has no children
-  // if(node has no children){
-  //   remove node
-  // }
+  if(walker -> getLeft() == nullptr && walker -> getRight() == nullptr){
+    //remove node
+    if(trailer -> getLeft() == walker){
+      free(walker);
+      trailer -> setLeft(nullptr);
+    }
+    if(trailer -> getRight() == walker){
+      free(walker);
+      trailer -> setRight(nullptr);
+    }
+    std::cout << "No child running" << std::endl;
+    return true;
+  }
 
   //Node has one child
-
+  if(walker -> getLeft() != nullptr || walker -> getRight() != nullptr && walker -> getLeft() == nullptr || walker -> getRight() == nullptr){
+    //
+  }
   //Node has two children
+  if(walker -> getLeft() != nullptr && walker -> getRight() != nullptr){
+    //
+  }
   return false;
 }
 

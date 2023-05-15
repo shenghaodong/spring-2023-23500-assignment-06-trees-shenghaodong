@@ -28,7 +28,8 @@ public:
   int oddsum(Node *n);
   int searchr(int value);
   int searchr(int value, Node *n);
-  bool deleteChild(int value);
+  bool deleteNode(int value);
+  //std::string checkChild(int n);
   //void insertr(int n);
   
 };

@@ -202,7 +202,6 @@ void BSTree::setup(){
   n2->setLeft(n);
   n = new Node(8);
   n2->setRight(n);
-  
 }
 
 //Start Assignment here
@@ -261,66 +260,6 @@ int BSTree::searchr(int value, Node *n){
 
 // }
 
-
-/*
-Normal Insert
-void BSTree::insert(int n){
-  Node *new_node = new Node(n);
-
-  // special case if the tree is empty
-  if (root == nullptr){
-    root = new_node;
-    return;
-  }
-
-  // search for the insertion point
-  Node *current = root;
-  Node *trailer = nullptr;
-  while (current != nullptr){
-    trailer = current; // catch the trailer up
-    int val = current->getData();
-    if (n == val){
-      // update the node with the additional stuff
-      return;
-    } else if (n < val){
-      current = current->getLeft();
-    } else {
-      current = current->getRight();
-    }
-  }
-  // if we get here, trailer points to the
-  // node above the new node's location
-  if (n < trailer->getData()){
-    trailer->setLeft(new_node);
-  } else {
-    trailer->setRight(new_node);
-  }
-     
-}
-*/
-
-//checkChild helper
-// std::string BSTree::checkChild(int n){
-//   Node *current = root;
-
-//   while (current != nullptr){
-//     int node_val = current->getData();
-//     if (n == node_val){
-//       if(current -> getLeft() != nullptr && current -> getRight() != nullptr){
-//         return "2 children";
-//       }else if(current -> getLeft() != nullptr || current -> getRight() != nullptr){
-//         return "1 child";
-//       }
-//     } else if (n < node_val){
-//       current = current->getLeft();
-//     } else {
-//       current = current->getRight();
-//     }
-//   }
-//   return "not found";
-  
-// }
-
 //Delete Routine
 bool BSTree::deleteNode(int value){
   Node *walker = root;
@@ -331,7 +270,6 @@ bool BSTree::deleteNode(int value){
   }else{
     //Find the node location
     while(walker -> getData() != value){
-      std::cout << walker -> getData() << std::endl;
       if(walker -> getData() < value){
         trailer = walker;
         walker = walker -> getRight();
@@ -344,6 +282,7 @@ bool BSTree::deleteNode(int value){
 
   //Node has no children
   if(walker -> getLeft() == nullptr && walker -> getRight() == nullptr){
+    std::cout << "No Children running" << "\n";
     //remove node
     if(trailer -> getLeft() == walker){
       free(walker);
@@ -353,17 +292,55 @@ bool BSTree::deleteNode(int value){
       free(walker);
       trailer -> setRight(nullptr);
     }
-    std::cout << "No child running" << std::endl;
     return true;
   }
 
   //Node has one child
-  if(walker -> getLeft() != nullptr || walker -> getRight() != nullptr && walker -> getLeft() == nullptr || walker -> getRight() == nullptr){
-    //
+  if((walker -> getLeft() != nullptr || walker -> getRight() != nullptr) && (walker -> getLeft() == nullptr || walker -> getRight() == nullptr)){
+    std::cout << "One Children running" << "\n";
+    Node *temp;
+    if(walker -> getLeft() != nullptr){//Left Child
+      temp = walker -> getLeft();
+      free(walker);
+      if(temp -> getData() < trailer -> getData()){
+        trailer -> setLeft(temp);
+      }else{
+        trailer -> setRight(temp);
+      }
+      return true;
+    }
+
+    if(walker -> getRight() != nullptr){//Right Child
+      temp = walker -> getRight();
+      free(walker);
+      if(temp -> getData() < trailer -> getData()){
+        trailer -> setLeft(temp);
+      }else{
+        trailer -> setRight(temp);
+      }
+      return true;
+    }
   }
   //Node has two children
   if(walker -> getLeft() != nullptr && walker -> getRight() != nullptr){
-    //
+    //Find Smallest Number in right subtree
+    Node *temp = walker;
+    trailer = walker;
+    walker = walker -> getRight();
+    while(walker -> getLeft() != nullptr){
+      trailer = walker;
+      walker = walker -> getLeft();
+    }
+    std::cout << temp -> getData() << std::endl;
+    int smallVal = walker -> getData();
+    if(walker -> getLeft() == nullptr && trailer -> getRight() == walker){
+      free(walker);
+      trailer -> setRight(nullptr);
+    }else{
+      trailer -> setLeft(nullptr);
+    }
+    temp -> setData(smallVal);
+    return true;
   }
   return false;
 }
@@ -371,6 +348,45 @@ bool BSTree::deleteNode(int value){
 
 
 //Tree Height
+int BSTree::treeHeight(){
+  Node *findHeight = root;
+  if(findHeight == nullptr){
+    return 0;
+  }else{
+    int leftDepth = treeHeight(findHeight -> getLeft());
+    int rightDepth = treeHeight(findHeight -> getRight());
+    if(leftDepth > rightDepth){
+      return leftDepth;
+    }else{
+      return rightDepth;
+    }
+  
+  }
+  return 0;
+}
+
+int BSTree::treeHeight(Node *getHeight){
+  Node *findHeight = getHeight;
+  if(getHeight == nullptr){
+    return 0;
+  }else{
+    int leftDepth = treeHeight(findHeight -> getLeft());
+    int rightDepth = treeHeight(findHeight -> getRight());
+    if(leftDepth > rightDepth){
+      return leftDepth + 1;
+    }else{
+      return rightDepth + 1;
+    }
+  
+  }
+  return 0;
+}
 
 
 //Are they cousins (On the layer on the tree)
+bool isCousin(int a, int b){
+  //Find Node A
+
+  //Find Node B
+
+}

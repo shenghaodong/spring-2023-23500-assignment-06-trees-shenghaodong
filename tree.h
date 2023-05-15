@@ -29,6 +29,8 @@ public:
   int searchr(int value);
   int searchr(int value, Node *n);
   bool deleteNode(int value);
+  int treeHeight();
+  int treeHeight(Node *getHeight);
   //std::string checkChild(int n);
   //void insertr(int n);
   
